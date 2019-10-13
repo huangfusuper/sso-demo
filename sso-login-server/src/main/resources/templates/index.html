@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="../static/jquery-3.4.1.min.js" th:src="@{/jquery-3.4.1.min.js}"></script>
+</head>
+<body>
+    <input type="text" th:value="${sourceUrl}"/>
+    账户：<input type="text" name="userName" id="userName"><br/>
+    密码:<input type="password" name="password" id="password"/><br/>
+    <input name="login" id="login" type="button" value="登录">
+</body>
+<script>
+    $("#login").click(function () {
+        var username = $("#userName").val();
+        var password = $("#password").val();
+        $.get("login",{userName:username,password:password},function (mag) {
+            alert(mag)
+        });
+    })
+</script>
+</html>
