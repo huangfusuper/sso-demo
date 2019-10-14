@@ -13,6 +13,7 @@
         <module>sso-login-server</module>
         <module>sso-common</module>
         <module>sso-user-server</module>
+        <module>sso-article-server</module>
     </modules>
 
     <parent>
