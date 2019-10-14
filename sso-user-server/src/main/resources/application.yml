@@ -1,15 +1,14 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
-    name: login-server
+    name: user-server
+
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: http://www.dahuangfu.club:8761/eureka/
   instance:
     prefer-ip-address: true
 
-login:
-  ttlMillis: 600000

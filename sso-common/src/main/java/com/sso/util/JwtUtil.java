@@ -1,5 +1,7 @@
 package com.sso.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -60,7 +62,7 @@ public class JwtUtil {
         JwtBuilder builder = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .claim("identity",iDentityString)
-                .setSubject(map.toString())
+                .setSubject(JSON.toJSONString(map))
                 .setIssuedAt(date)
                 .signWith(signatureAlgorithm,generaKey())
                 .setExpiration(new Date(l+ttlMillis))
@@ -75,8 +77,24 @@ public class JwtUtil {
      */
     public static Map<String,Object> parseJwt(String jwt){
         SecretKey secretKey = generaKey();
-        Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
-        return body;
+        try {
+            Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
+            return body;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public static String verification(String jwt,String salt){
+        Map<String, Object> map = parseJwt(jwt);
+        if(map == null){
+            return null;
+        }
+        String identity = (String)map.get("identity");
+        if(identity.equals(salt)){
+            String subString = (String)map.get("sub");
+            return subString;
+        }
+        return null;
     }
 
     private static SecretKey generaKey(){
@@ -99,12 +117,8 @@ public class JwtUtil {
         stringObjectHashMap.put("id", UUID.randomUUID().toString());
         stringObjectHashMap.put("userName","张三");
         stringObjectHashMap.put("age",80);
-        String jwt = createJWT(stringObjectHashMap, 400000,"施瓦辛格");
-        jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZGVudGl0eSI6IumYtOWkqeiAjOS4lOW8gOW_gyIsInN1YiI6Int1c2VyPVVzZXIoaWQ9bnVsbCwgdXNlck5hbWU9MTIzLCBwYXNzd29yZD0xMjMsIGFkZHJlc3M9bnVsbCwgYWdlPTApfSIsImlhdCI6MTU3MDk3OTIwMCwiZXhwIjoxNTcwOTc5ODAwLCJpc3MiOiJodWFuZ2Z1In0.lS4mp0AFiQPZjOOf73ZOFj1cefoesIhEdFwfmAeYSuA";
+        String jwt = createJWT(stringObjectHashMap, 20000000,"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36");
         System.out.println(jwt);
-        Thread.sleep(2000);
-        long l = System.currentTimeMillis();
         System.out.println(parseJwt(jwt));
-        System.out.println(System.currentTimeMillis()-l);
     }
 }
