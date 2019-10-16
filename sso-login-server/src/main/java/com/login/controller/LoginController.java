@@ -1,12 +1,8 @@
 package com.login.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.netflix.client.http.HttpRequest;
-import com.netflix.client.http.HttpResponse;
 import com.sso.pojo.User;
 import com.sso.util.CookieUtil;
 import com.sso.util.JwtUtil;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.beans.Transient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

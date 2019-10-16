@@ -5,10 +5,4 @@ spring:
   application:
     name: user-server
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://www.dahuangfu.club:8761/eureka/
-  instance:
-    prefer-ip-address: true
 

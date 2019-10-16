@@ -4,12 +4,6 @@ server:
 spring:
   application:
     name: article-server
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://www.dahuangfu.club:8761/eureka/
-  instance:
-    prefer-ip-address: true
 
 login:
   ttlMillis: 600000

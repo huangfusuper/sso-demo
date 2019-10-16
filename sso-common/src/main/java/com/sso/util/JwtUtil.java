@@ -84,11 +84,19 @@ public class JwtUtil {
             return null;
         }
     }
+
+    /**
+     * 验证
+     * @param jwt
+     * @param salt
+     * @return
+     */
     public static String verification(String jwt,String salt){
         Map<String, Object> map = parseJwt(jwt);
         if(map == null){
             return null;
         }
+        //获取盐
         String identity = (String)map.get("identity");
         if(identity.equals(salt)){
             String subString = (String)map.get("sub");
@@ -97,6 +105,10 @@ public class JwtUtil {
         return null;
     }
 
+    /**
+     * 解码秘钥，理论上秘钥只能自己知道  此秘钥明文为   皇甫科星
+     * @return
+     */
     private static SecretKey generaKey(){
         String stringKey = "55qH55Sr56eR5pif";
         //解码
